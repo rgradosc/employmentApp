@@ -1,0 +1,38 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.40629.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1.Employment.Database", "1.Employment.Database", "{85BE6ACD-7545-4EDC-AF97-1A7F22E4D1EA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2.Employment.WebApi", "2.Employment.WebApi", "{CAD6CB32-C60E-488A-9A03-DA94189F7D96}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Employment.WebApi", "Employment.WebApi\Employment.WebApi.csproj", "{AEA726F0-46B8-45FA-BC09-002C91B5B922}"
+EndProject
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "Employment.Database", "Employment.Database\Employment.Database.sqlproj", "{87BFD05A-3A61-4CB0-9720-0BDDE3B1715A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AEA726F0-46B8-45FA-BC09-002C91B5B922}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AEA726F0-46B8-45FA-BC09-002C91B5B922}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AEA726F0-46B8-45FA-BC09-002C91B5B922}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AEA726F0-46B8-45FA-BC09-002C91B5B922}.Release|Any CPU.Build.0 = Release|Any CPU
+		{87BFD05A-3A61-4CB0-9720-0BDDE3B1715A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{87BFD05A-3A61-4CB0-9720-0BDDE3B1715A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{87BFD05A-3A61-4CB0-9720-0BDDE3B1715A}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{87BFD05A-3A61-4CB0-9720-0BDDE3B1715A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{87BFD05A-3A61-4CB0-9720-0BDDE3B1715A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{87BFD05A-3A61-4CB0-9720-0BDDE3B1715A}.Release|Any CPU.Deploy.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{AEA726F0-46B8-45FA-BC09-002C91B5B922} = {CAD6CB32-C60E-488A-9A03-DA94189F7D96}
+		{87BFD05A-3A61-4CB0-9720-0BDDE3B1715A} = {85BE6ACD-7545-4EDC-AF97-1A7F22E4D1EA}
+	EndGlobalSection
+EndGlobal
