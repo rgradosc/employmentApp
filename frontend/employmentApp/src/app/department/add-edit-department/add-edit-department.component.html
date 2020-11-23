@@ -1,0 +1,21 @@
+<form class="row">
+    <div class="col-md-12">
+        <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" name="name" id="name" class="form-control" placeholder="Enter department name"
+                [(ngModel)]="name">
+        </div>
+    </div>
+
+    <div class="col-md-12">
+        <div class="form-group">
+            <button type="button" class="btn btn-outline-secondary mr-1" data-dismiss="modal">Close</button>
+            <button (click)="addDepartment()" *ngIf="department.id == 0" class="btn btn-primary mr-1">
+                Create department
+            </button>
+            <button (click)="updateDepartment()" *ngIf="department.id != 0" class="btn btn-primary mr-1">
+                Update department
+            </button>
+        </div>
+    </div>
+</form>

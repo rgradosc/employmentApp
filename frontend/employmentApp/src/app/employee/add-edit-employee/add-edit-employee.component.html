@@ -1,0 +1,53 @@
+<div class="d-flex flex-row bd-highlight mb-3">
+
+    <div class="col-md-8">
+        <form class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" name="name" id="name" class="form-control" placeholder="Enter employee name"
+                        [(ngModel)]="name">
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="departments">Department</label>
+                    <select class="form-control custom-select" name="departments" [(ngModel)]="department">
+                        <option selected="selected">[Select a department]</option>
+                        <option *ngFor="let element of departmentsList" value="element.id">
+                            {{element.name}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="dateOfJoining">Date of Joining</label>
+                    <input type="date" name="dateOfJoining" class="form-control" [(ngModel)]="dateOfJoining">
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="form-group">
+                    <button type="button" class="btn btn-outline-secondary mr-1" data-dismiss="modal">Close</button>
+                    <button (click)="addEmployee()" *ngIf="employee.id == 0" class="btn btn-primary mr-1">
+                        Create employee
+                    </button>
+                    <button (click)="updateEmployee()" *ngIf="employee.id != 0" class="btn btn-primary mr-1">
+                        Update employee
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="col-md-4">
+        <div class="ml-3 bd-highlight">
+            <img [src]=photoFilePath alt="User Image" style="width: 185px;height: 185;">
+            <input type="file" (change)="uploadPhoto($event)" class="mt-2">
+        </div>
+    </div>
+
+</div>
