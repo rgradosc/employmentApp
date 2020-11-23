@@ -351,11 +351,11 @@ MigrationBackup/
 
 # Angular ignore
 # compiled output
-/dist
+/frontend/employmentApp/dist/
 /tmp
 /out-tsc
 # Only exists if Bazel was run
-/bazel-out
+/frontend/employmentApp/bazel-out
 
 # dependencies
 /node_modules
