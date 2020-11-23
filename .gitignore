@@ -355,7 +355,7 @@ MigrationBackup/
 /tmp
 /out-tsc
 # Only exists if Bazel was run
-/frontend/employmentApp/bazel-out
+/bazel-out
 
 # dependencies
 /node_modules
