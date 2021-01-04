@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web.Http;
+﻿using System.Web.Http;
 using System.Web.Http.Cors;
 using System.Net.Http.Headers;
 
 namespace Employment.WebApi
 {
+    using Handler;
+
     public static class WebApiConfig
     {
         public static void Register(HttpConfiguration config)
@@ -21,6 +20,9 @@ namespace Employment.WebApi
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
+
+            // Handler validador de tokens
+            config.MessageHandlers.Add(new ValidateTokenHandler());
 
             config.Formatters.XmlFormatter.SupportedMediaTypes.Clear();
             config.Formatters.JsonFormatter.SupportedMediaTypes.Add(new MediaTypeHeaderValue("application/json"));

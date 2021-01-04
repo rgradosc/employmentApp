@@ -1,25 +1,26 @@
 ﻿using System;
 using System.Net;
+using System.Web;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.Description;
 using System.Collections.Generic;
 
 namespace Employment.WebApi.Controllers
 {
     using Repository;
     using Models;
-    using System.Web;
-    using System.Web.Http.Description;
 
     /// <summary>
     /// 
     /// </summary>
+    [Authorize]
     public class EmployeeController : ApiController
     {
         private EmployeeRepository repository;
         private MessageResponse response;
         private const int zero = 0;
-        
+
         /// <summary>
         /// 
         /// </summary>
@@ -28,7 +29,7 @@ namespace Employment.WebApi.Controllers
             repository = new EmployeeRepository();
             response = new MessageResponse();
         }
-        
+
         /// <summary>
         /// Elimina un objeto de la base de datos.
         /// </summary>

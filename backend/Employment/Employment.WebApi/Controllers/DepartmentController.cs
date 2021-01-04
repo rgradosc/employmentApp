@@ -2,17 +2,18 @@
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.Description;
 using System.Collections.Generic;
 
 namespace Employment.WebApi.Controllers
 {
     using Repository;
     using Models;
-    using System.Web.Http.Description;
 
     /// <summary>
     /// 
     /// </summary>
+    [Authorize]
     public class DepartmentController : ApiController
     {
         private DepartmentRepository repository;
@@ -257,7 +258,7 @@ namespace Employment.WebApi.Controllers
                     Code = "S001",
                     Description = $"La consulta devolvío un resultado."
                 };
-                
+
                 return Request.CreateResponse(HttpStatusCode.OK, response);
             }
             catch (Exception ex)
