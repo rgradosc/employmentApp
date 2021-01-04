@@ -2,7 +2,7 @@
 
 namespace Employment.WebApi.Repository
 {
-    public class MessageError
+    public class Message
     {
         [JsonProperty("code")]
         public string Code { get; set; }

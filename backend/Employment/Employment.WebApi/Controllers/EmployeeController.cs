@@ -18,7 +18,7 @@ namespace Employment.WebApi.Controllers
     public class EmployeeController : ApiController
     {
         private EmployeeRepository repository;
-        private MessageResponse response;
+        private Response response;
         private const int zero = 0;
 
         /// <summary>
@@ -27,7 +27,7 @@ namespace Employment.WebApi.Controllers
         public EmployeeController()
         {
             repository = new EmployeeRepository();
-            response = new MessageResponse();
+            response = new Response();
         }
 
         /// <summary>
@@ -40,7 +40,7 @@ namespace Employment.WebApi.Controllers
         /// <response code="500">InternalServerError. Error interno del servidor.</response>
         /// <returns>Objeto con la información del estado y datos de la solicitud.</returns>
         [HttpDelete]
-        [ResponseType(typeof(MessageResponse))]
+        [ResponseType(typeof(Response))]
         public HttpResponseMessage Delete(int id)
         {
             try
@@ -49,7 +49,7 @@ namespace Employment.WebApi.Controllers
 
                 if (department == null)
                 {
-                    response.MessageError = new MessageError()
+                    response.Message = new Message()
                     {
                         Code = "E002",
                         Description = $"No se encontró al empleado con el id: {id}",
@@ -61,7 +61,7 @@ namespace Employment.WebApi.Controllers
 
                 if (result != zero)
                 {
-                    response.MessageOk = new MessageOk()
+                    response.Message = new Message()
                     {
                         Code = "C003",
                         Description = "El empleado se elimino correctamente.",
@@ -71,7 +71,7 @@ namespace Employment.WebApi.Controllers
                     return Request.CreateResponse(HttpStatusCode.OK, response);
                 }
 
-                response.MessageError = new MessageError()
+                response.Message = new Message()
                 {
                     Code = "E002",
                     Description = "Error al eliminar el empleado",
@@ -82,7 +82,7 @@ namespace Employment.WebApi.Controllers
             }
             catch (Exception ex)
             {
-                response.MessageError = new MessageError()
+                response.Message = new Message()
                 {
                     Code = "E001",
                     Description = "La petición se devolvio con errores.",
@@ -107,7 +107,7 @@ namespace Employment.WebApi.Controllers
         /// <response code="500">InternalServerError. Error producido en el servidor.</response>
         /// <returns>Objeto con la información del estado y datos de la solicitud.</returns>
         [HttpPut]
-        [ResponseType(typeof(MessageResponse))]
+        [ResponseType(typeof(Response))]
         public HttpResponseMessage Put(Employee model)
         {
             try
@@ -116,7 +116,7 @@ namespace Employment.WebApi.Controllers
 
                 if (department == null)
                 {
-                    response.MessageError = new MessageError()
+                    response.Message = new Message()
                     {
                         Code = "E002",
                         Description = $"No se encontró el empleado con el id: {model.Id}",
@@ -129,7 +129,7 @@ namespace Employment.WebApi.Controllers
                 int result = repository.Update(model);
                 if (result != zero)
                 {
-                    response.MessageOk = new MessageOk()
+                    response.Message = new Message()
                     {
                         Code = "C002",
                         Description = "El empleado se actualizo correctamente.",
@@ -146,7 +146,7 @@ namespace Employment.WebApi.Controllers
                     return Request.CreateResponse(HttpStatusCode.OK, response);
                 }
 
-                response.MessageError = new MessageError()
+                response.Message = new Message()
                 {
                     Code = "C001",
                     Description = "Error al actualizar el empleado.",
@@ -157,7 +157,7 @@ namespace Employment.WebApi.Controllers
             }
             catch (Exception ex)
             {
-                response.MessageError = new MessageError()
+                response.Message = new Message()
                 {
                     Code = "E001",
                     Description = "La petición se devolvio con errores.",
@@ -181,7 +181,7 @@ namespace Employment.WebApi.Controllers
         /// <response code="500">InternalServerError. Error producido en el servidor.</response>
         /// <returns>Objeto con la información del estado y datos de la solicitud.</returns>
         [HttpPost]
-        [ResponseType(typeof(MessageResponse))]
+        [ResponseType(typeof(Response))]
         public HttpResponseMessage Post(Employee model)
         {
             try
@@ -190,7 +190,7 @@ namespace Employment.WebApi.Controllers
                 if (id != zero)
                 {
                     model.Id = id;
-                    response.MessageOk = new MessageOk()
+                    response.Message = new Message()
                     {
                         Code = "C001",
                         Description = "El empleado se creo correctamente.",
@@ -200,7 +200,7 @@ namespace Employment.WebApi.Controllers
                     return Request.CreateResponse(HttpStatusCode.Created, response);
                 }
 
-                response.MessageError = new MessageError()
+                response.Message = new Message()
                 {
                     Code = "C001",
                     Description = "Error al crear el empleado.",
@@ -211,7 +211,7 @@ namespace Employment.WebApi.Controllers
             }
             catch (Exception ex)
             {
-                response.MessageError = new MessageError()
+                response.Message = new Message()
                 {
                     Code = "E001",
                     Description = "La petición se devolvio con errores.",
@@ -235,7 +235,7 @@ namespace Employment.WebApi.Controllers
         /// <param name="id">Id del objeto.</param>
         /// <returns>Objeto con la información del estado y datos de la solicitud.</returns>
         [HttpGet]
-        [ResponseType(typeof(MessageResponse))]
+        [ResponseType(typeof(Response))]
         public HttpResponseMessage Get(int id)
         {
             try
@@ -244,7 +244,7 @@ namespace Employment.WebApi.Controllers
 
                 if (department == null)
                 {
-                    response.MessageOk = new MessageOk()
+                    response.Message = new Message()
                     {
                         Code = "S001",
                         Description = $"No se encontró el empleado con el id: {id}",
@@ -254,7 +254,7 @@ namespace Employment.WebApi.Controllers
                 }
 
                 response.Data = department;
-                response.MessageOk = new MessageOk()
+                response.Message = new Message()
                 {
                     Code = "S001",
                     Description = $"La consulta devolvío un resultado."
@@ -264,15 +264,14 @@ namespace Employment.WebApi.Controllers
             }
             catch (Exception ex)
             {
-                response = new MessageResponse()
+                response = new Response()
                 {
                     Data = ex.Message,
-                    MessageError = new MessageError()
+                    Message = new Message()
                     {
                         Code = "E001",
                         Description = "La petición se devolvio con errores",
                     },
-                    MessageOk = null,
                 };
 
                 return Request.CreateResponse(HttpStatusCode.InternalServerError, response);
@@ -290,17 +289,16 @@ namespace Employment.WebApi.Controllers
         /// <response code="500">InternalServerError. Error producido en el servidor.</response>
         /// <returns>Objeto con la información del estado y datos de la solicitud.</returns>
         [HttpGet]
-        [ResponseType(typeof(MessageResponse))]
+        [ResponseType(typeof(Response))]
         public HttpResponseMessage Get()
         {
             try
             {
                 ICollection<Employee> model = repository.GetAll();
-                response = new MessageResponse()
+                response = new Response()
                 {
                     Data = model,
-                    MessageError = null,
-                    MessageOk = new MessageOk()
+                    Message = new Message()
                     {
                         Code = "S001",
                         Description = $"La lista devolvío { model.Count } registros."
@@ -312,7 +310,7 @@ namespace Employment.WebApi.Controllers
             catch (Exception ex)
             {
                 response.Data = ex.Message;
-                response.MessageError = new MessageError()
+                response.Message = new Message()
                 {
                     Code = "E001",
                     Description = "La petición se devolvio con errores",
@@ -330,7 +328,7 @@ namespace Employment.WebApi.Controllers
         /// <returns>Objeto con la información del estado y datos de la solicitud.</returns>
         [HttpPost]
         [Route("api/employee/upload")]
-        [ResponseType(typeof(MessageResponse))]
+        [ResponseType(typeof(Response))]
         public HttpResponseMessage Upload()
         {
             try
@@ -342,7 +340,7 @@ namespace Employment.WebApi.Controllers
                 postedFile.SaveAs(physicalPath);
 
                 response.Data = fileName;
-                response.MessageOk = new MessageOk()
+                response.Message = new Message()
                 {
                     Code = "I001",
                     Description = "La imagen se cargo correctamente."
@@ -353,7 +351,7 @@ namespace Employment.WebApi.Controllers
             catch (Exception ex)
             {
                 response.Data = ex;
-                response.MessageError = new MessageError()
+                response.Message = new Message()
                 {
                     Code = "E001",
                     Description = "Error al cargar la imagen.",
