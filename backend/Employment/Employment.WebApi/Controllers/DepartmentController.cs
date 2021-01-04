@@ -8,20 +8,37 @@ namespace Employment.WebApi.Controllers
 {
     using Repository;
     using Models;
+    using System.Web.Http.Description;
 
+    /// <summary>
+    /// 
+    /// </summary>
     public class DepartmentController : ApiController
     {
         private DepartmentRepository repository;
         private MessageResponse response;
         private const int zero = 0;
 
+        /// <summary>
+        /// 
+        /// </summary>
         public DepartmentController()
         {
             repository = new DepartmentRepository();
             response = new MessageResponse();
         }
 
+        /// <summary>
+        /// Elimina un objeto de la base de datos.
+        /// </summary>
+        /// <param name="id">Id del objeto.</param>
+        /// <response code="200">OK. El objeto fue eliminado.</response>
+        /// <response code="400">BadRequest. No se elimino el objeto. Formato de los datos incorrecto.</response>
+        /// <response code="404">NotFound. El objeto a eliminar no existe.</response>
+        /// <response code="500">InternalServerError. Error interno del servidor.</response>
+        /// <returns>Objeto con la información del estado y datos de la solicitud.</returns>
         [HttpDelete]
+        [ResponseType(typeof(MessageResponse))]
         public HttpResponseMessage Delete(int id)
         {
             try
@@ -74,7 +91,21 @@ namespace Employment.WebApi.Controllers
             }
         }
 
+        /// <summary>
+        /// Actualiza un objeto de la base de datos.
+        /// </summary>
+        /// <remarks>
+        /// El método devuelve información del objeto creado y de los errores ocurridos. Además, 
+        /// devuelve el código y descripción del estado de la petición.
+        /// </remarks>
+        /// <param name="model">Objeto a actualizar.</param>
+        /// <response code="200">OK. El objeto se actualizó correctamente.</response>
+        /// <response code="400">BadRequest. No se actualizó el objeto. Formato de los datos incorrectos.</response>
+        /// <response code="404">NotFound. El objeto a actualizar no existe.</response>
+        /// <response code="500">InternalServerError. Error producido en el servidor.</response>
+        /// <returns>Objeto con la información del estado y datos de la solicitud.</returns>
         [HttpPut]
+        [ResponseType(typeof(MessageResponse))]
         public HttpResponseMessage Put(Department model)
         {
             try
@@ -135,7 +166,20 @@ namespace Employment.WebApi.Controllers
             }
         }
 
+        /// <summary>
+        /// Crea un objeto en la base de datos.
+        /// </summary>
+        /// <remarks>
+        /// El método devuelve información del objeto creado y de los errores ocurridos. Además, 
+        /// devuelve el código y descripción del estado de la petición.
+        /// </remarks>
+        /// <param name="model">Contiene los datos del objeto a crear.</param>
+        /// <response code="201">Ok. El objeto fue creaado correctamente.</response>
+        /// <response code="400">BadRequest. No se creo el objeto. Formarto de los datos incorrectos.</response>
+        /// <response code="500">InternalServerError. Error producido en el servidor.</response>
+        /// <returns>Objeto con la información del estado y datos de la solicitud.</returns>
         [HttpPost]
+        [ResponseType(typeof(MessageResponse))]
         public HttpResponseMessage Post(Department model)
         {
             try
@@ -151,7 +195,7 @@ namespace Employment.WebApi.Controllers
                     };
                     response.Data = model;
 
-                    return Request.CreateResponse(HttpStatusCode.OK, response);
+                    return Request.CreateResponse(HttpStatusCode.Created, response);
                 }
 
                 response.MessageError = new MessageError()
@@ -176,7 +220,20 @@ namespace Employment.WebApi.Controllers
             }
         }
 
+        /// <summary>
+        /// Obtiene un objeto por su Id de la base de datos.
+        /// </summary>
+        /// <remarks>
+        /// Los datos del departamento se encuentran dentro de la propiedad Data del objeto devuelto. 
+        /// El código y descripción del estado también son devueltos.
+        /// </remarks>
+        /// <response code="200">Ok. Información devuelta correctamente. </response>
+        /// <response code="404">NotFound. El objeto solicitado no existe.</response>
+        /// <response code="500">InternalServerError. Error producido en el servidor.</response>
+        /// <param name="id">Id del objeto.</param>
+        /// <returns>Objeto con la información del estado y datos de la solicitud.</returns>
         [HttpGet]
+        [ResponseType(typeof(MessageResponse))]
         public HttpResponseMessage Get(int id)
         {
             try
@@ -216,11 +273,22 @@ namespace Employment.WebApi.Controllers
                     MessageOk = null,
                 };
 
-                return Request.CreateResponse(HttpStatusCode.BadRequest, response);
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, response);
             }
         }
 
+        /// <summary>
+        /// Obtiene una lista de objetos de la base de datos.
+        /// </summary>
+        /// <remarks>
+        /// Los datos de los departamentos se encuentran dentro de la propiedad "data" del objeto devuelto.
+        /// El código y descripción del estado también son devueltos.
+        /// </remarks>
+        /// <response code="200">Ok. Información devuelta correctamente. </response>
+        /// <response code="500">InternalServerError. Error producido en el servidor.</response>
+        /// <returns>Objeto con la información del estado y datos de la solicitud.</returns>
         [HttpGet]
+        [ResponseType(typeof(MessageResponse))]
         public HttpResponseMessage Get()
         {
             try
@@ -252,7 +320,7 @@ namespace Employment.WebApi.Controllers
                     MessageOk = null,
                 };
 
-                return Request.CreateResponse(HttpStatusCode.BadRequest, response);
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, response);
             }
         }
     }
