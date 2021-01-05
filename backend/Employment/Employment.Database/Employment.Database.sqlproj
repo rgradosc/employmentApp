@@ -76,10 +76,16 @@
     <Build Include="dbo\StoredProcedures\spEmployees_GetById.sql" />
     <Build Include="dbo\StoredProcedures\spEmployees_Insert.sql" />
     <Build Include="dbo\StoredProcedures\spEmployees_Update.sql" />
+    <Build Include="dbo\Tables\Roles.sql" />
+    <Build Include="dbo\Tables\Users.sql" />
+    <Build Include="dbo\StoredProcedures\spUsers_Auth.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="PublishProfiles\Employment.Database.publish.xml" />
     <None Include="dbo\Scripts.sql" />
     <None Include="PublishProfiles\Employment.Database.Server.publish.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <RefactorLog Include="Employment.Database.refactorlog" />
   </ItemGroup>
 </Project>
