@@ -136,11 +136,14 @@
     <Compile Include="Models\Employee.cs" />
     <Compile Include="Models\Login.cs" />
     <Compile Include="Models\UserInfo.cs" />
+    <Compile Include="Repository\AuthRepository.cs" />
     <Compile Include="Repository\EmployeeRepository.cs" />
     <Compile Include="Repository\Message.cs" />
     <Compile Include="Repository\Response.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\DepartmentRepository.cs" />
+    <Compile Include="Services\AuthService.cs" />
+    <Compile Include="Crypto.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

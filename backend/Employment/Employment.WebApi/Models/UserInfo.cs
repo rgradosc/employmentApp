@@ -4,7 +4,7 @@ namespace Employment.WebApi.Models
 {
     public class UserInfo
     {
-        public Guid Id { get; set; }
+        public string Id { get; set; }
 
         public string FirstName { get; set; }
 
@@ -13,5 +13,10 @@ namespace Employment.WebApi.Models
         public string Email { get; set; }
 
         public string Role { get; set; }
+
+        public UserInfo()
+        {
+            Role = string.Empty;
+        }
     }
 }

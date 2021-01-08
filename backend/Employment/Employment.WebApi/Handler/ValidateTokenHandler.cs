@@ -27,11 +27,11 @@ namespace Employment.WebApi.Handler
 
             try
             {
-                var claveSecreta = ConfigurationManager.AppSettings["ClaveSecreta"];
+                var secretKey = ConfigurationManager.AppSettings["SecretKey"];
                 var issuerToken = ConfigurationManager.AppSettings["Issuer"];
                 var audienceToken = ConfigurationManager.AppSettings["Audience"];
 
-                var securityKey = new SymmetricSecurityKey(System.Text.Encoding.Default.GetBytes(claveSecreta));
+                var securityKey = new SymmetricSecurityKey(System.Text.Encoding.Default.GetBytes(secretKey));
 
                 SecurityToken securityToken;
                 JwtSecurityTokenHandler tokenHandler = new JwtSecurityTokenHandler();
@@ -41,13 +41,10 @@ namespace Employment.WebApi.Handler
                     ValidIssuer = issuerToken,
                     ValidateLifetime = true,
                     ValidateIssuerSigningKey = true,
-                    // DELEGADO PERSONALIZADO PERA COMPROBAR
-                    // LA CADUCIDAD EL TOKEN.
                     LifetimeValidator = this.LifetimeValidator,
                     IssuerSigningKey = securityKey
                 };
 
-                // COMPRUEBA LA VALIDEZ DEL TOKEN
                 Thread.CurrentPrincipal = tokenHandler.ValidateToken(token,
                                                                      validationParameters,
                                                                      out securityToken);
@@ -70,7 +67,6 @@ namespace Employment.WebApi.Handler
                         new HttpResponseMessage(statusCode) { });
         }
 
-        // RECUPERA EL TOKEN DE LA PETICIÓN
         private static bool TryRetrieveToken(HttpRequestMessage request, out string token)
         {
             token = null;
@@ -80,16 +76,14 @@ namespace Employment.WebApi.Handler
             {
                 return false;
             }
+
             var bearerToken = authzHeaders.ElementAt(0);
-            token = bearerToken.StartsWith("Bearer ") ?
-                    bearerToken.Substring(7) : bearerToken;
+            token = bearerToken.StartsWith("Bearer ") ? bearerToken.Substring(7) : bearerToken;
             return true;
         }
 
-        // COMPRUEBA LA CADUCIDAD DEL TOKEN
-        public bool LifetimeValidator(DateTime? notBefore,
-                                      DateTime? expires,
-                                      SecurityToken securityToken,
+        public bool LifetimeValidator(DateTime? notBefore, DateTime? expires,
+                                      SecurityToken securityToken, 
                                       TokenValidationParameters validationParameters)
         {
             bool valid = false;
