@@ -78,7 +78,9 @@
     <Build Include="dbo\StoredProcedures\spEmployees_Update.sql" />
     <Build Include="dbo\Tables\Roles.sql" />
     <Build Include="dbo\Tables\Users.sql" />
-    <Build Include="dbo\StoredProcedures\spUsers_Auth.sql" />
+    <Build Include="dbo\StoredProcedures\spUsers_GetUserByUserName.sql" />
+    <Build Include="dbo\Tables\UserRoles.sql" />
+    <Build Include="dbo\StoredProcedures\spUsers_GetPasswordHashByUserId.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="PublishProfiles\Employment.Database.publish.xml" />
