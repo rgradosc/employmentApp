@@ -1,4 +1,5 @@
-﻿using System.Web.Http.Description;
+﻿using System;
+using System.Web.Http.Description;
 using System.Threading.Tasks;
 using System.Net;
 using System.Web.Http;
@@ -10,11 +11,17 @@ namespace Employment.WebApi.Controllers
     using Services;
     using Repository;
 
+    /// <summary>
+    /// 
+    /// </summary>
     public class LoginController : ApiController
     {
         private readonly AuthService authService;
         private readonly Response response;
 
+        /// <summary>
+        /// 
+        /// </summary>
         public LoginController()
         {
             authService = new AuthService();
@@ -22,6 +29,15 @@ namespace Employment.WebApi.Controllers
         }
 
         // POST: api/Login
+        /// <summary>
+        /// Inicia sesión en la API
+        /// </summary>
+        /// <param name="login">Credenciales de acceso del usuaio.</param>
+        /// <response code="200">Ok. Inicia sesión y genera el token JWT.</response>
+        /// <response code="400">BadRequest. No se inicio sesión. Formato de los datos incorrectos.</response>
+        /// <response code="401">Unauthorized. No se inicio sesión. Usuario no autorizado.</response>
+        /// <response code="500">InternalServerError. Error interno del servidor.</response>
+        /// <returns>Token de autenticación</returns>
         [HttpPost]
         [AllowAnonymous]
         [ResponseType(typeof(Response))]
@@ -40,29 +56,44 @@ namespace Employment.WebApi.Controllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, response); 
             }
 
-            UserInfo userInfo = await authService.AuthenticateUserAsync(login.UserName, login.Password);
-
-            if (userInfo != null)
+            try
             {
-                response.Message = new Message()
+                UserInfo userInfo = await authService.AuthenticateUserAsync(login.UserName, login.Password);
+
+                if (userInfo != null)
                 {
-                    Code = "A001",
-                    Description = "Authorized user.",
-                };
+                    response.Message = new Message()
+                    {
+                        Code = "A001",
+                        Description = "Authorized user.",
+                    };
 
-                response.Data = authService.GenerateTokenJWT(userInfo);
+                    response.Data = authService.GenerateTokenJWT(userInfo);
 
-                return Request.CreateResponse(HttpStatusCode.OK, response);
+                    return Request.CreateResponse(HttpStatusCode.OK, response);
+                }
+                else
+                {
+                    response.Message = new Message()
+                    {
+                        Code = "E005",
+                        Description = "Unauthorized user.",
+                    };
+
+                    return Request.CreateResponse(HttpStatusCode.Unauthorized, response);
+                }
             }
-            else
+            catch (Exception ex)
             {
                 response.Message = new Message()
                 {
-                    Code = "E005",
-                    Description = "Unauthorized user.",
+                    Code = "E006",
+                    Description = "Server error.",
                 };
 
-                return Request.CreateResponse(HttpStatusCode.Unauthorized, response);
+                response.Data = ex.Message;
+
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, response);
             }
         }
     }
